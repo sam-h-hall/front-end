@@ -1,27 +1,42 @@
 import React from "react";
 import "./LoginForm.css";
-import { Formik, useFormik, Form, Field } from 'formik';
+import { Formik, useFormikContext, Form, Field } from 'formik';
 
 
 const LoginForm = () => {
-  const formData = useFormik({
-    initialValues: {
-      username: "",
-      password: ""
-    },
-    handleSubmit: (values => {
-      console.log(values)
-    })
-  })
+  // const formData = useFormikContext({
+  //   initialValues: {
+  //     username: "",
+  //     password: ""
+  //   },
+  //   onSubmit: values => {
+  //     console.log(values)
+  //   },
+  // })
+  const initialValues = {
+    userLogin: [
+      {
+        username: "",
+        password: ""
+      }
+    ]
+  }
+
   return (
     <div className="login">
       <h1>Log In</h1>
-      <Formik>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={values => {
+          alert(JSON.stringify(values, null, 2));
+        }}
+      >
         <Form>
-          <label>Username</label>
-          <Field className="field" name="username" type="text" placeholder="username" onChange={Formik.handleChange} />
-          <label>Password</label>
-          <Field className="field" name="password" type="password" placeholder="password" onChange={Formik.handleChange} />
+          <label htmlFor="username">Username</label>
+          <Field name="userLogin[0].username" type="text" placeholder="username" />
+          <label htmlFor="password">Password</label>
+          <Field name="userLogin[0].password" type="password" placeholder="password" />
+          {/* add new user route to sign up */}
           <button>Submit</button>
         </Form>
       </Formik>
